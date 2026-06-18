@@ -625,7 +625,7 @@ function getCompletionOptions() {
       if ((state.yearLevel === '7' && state.halfYear === '2') || state.yearLevel === '8') {
         if (state.differentiation === 'er') return 'Die Leistungen wurden in den Fächern Englisch und Mathematik überwiegend auf ER-Niveau erbracht.';
         if (state.differentiation === 'gr') return 'Die Leistungen wurden in den Fächern Englisch und Mathematik überwiegend auf GR-Niveau erbracht.';
-        if (state.differentiation === 'mixed') return 'Die Leistungen wurden im Fach Englisch und/oder im Fach Mathematik sowohl auf GR-Niveau als auch auf ER-Niveau erbracht.';
+        if (state.differentiation === 'mixed') return 'Die Leistungen wurden @IMFACHINDENFÄCHERN_GR @GR_Fächer überwiegend auf GR-Niveau, @IMFACHINDENFÄCHERN_ER @ER_Fächer überwiegend auf ER-Niveau erbracht.';
       }
 
       if (state.differentiation === 'er') {
