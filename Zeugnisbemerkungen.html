@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zeugnisbemerkungen Klassen 7–10</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-sm: 0.95rem;
+      --text-base: 1rem;
+      --text-lg: 1.3rem;
+      --text-xl: 2rem;
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --color-bg: #f7f6f2;
+      --color-surface: #f9f8f5;
+      --color-surface-2: #fbfbf9;
+      --color-surface-offset: #edeae5;
+      --color-border: #d4d1ca;
+      --color-divider: #dcd9d5;
+      --color-text: #28251d;
+      --color-text-muted: #67645d;
+      --color-text-faint: #95928b;
+      --color-primary: #01696f;
+      --color-primary-hover: #0c4e54;
+      --color-primary-highlight: #dcebec;
+      --color-success: #437a22;
+      --color-error: #9b2f44;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --shadow-sm: 0 1px 2px rgba(40,37,29,0.06);
+      --shadow-md: 0 8px 24px rgba(40,37,29,0.08);
+      --font-body: 'Instrument Sans', system-ui, sans-serif;
+      --font-display: 'Literata', Georgia, serif;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #171614;
+      --color-surface: #1c1b19;
+      --color-surface-2: #201f1d;
+      --color-surface-offset: #2a2825;
+      --color-border: #393836;
+      --color-divider: #262523;
+      --color-text: #ece9e2;
+      --color-text-muted: #b7b2aa;
+      --color-text-faint: #8a867f;
+      --color-primary: #4f98a3;
+      --color-primary-hover: #66aebb;
+      --color-primary-highlight: #243438;
+      --color-success: #82b65d;
+      --color-error: #d77b91;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.25);
+      --shadow-md: 0 10px 28px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.55;
+      color: var(--color-text);
+      background: linear-gradient(180deg, var(--color-bg), var(--color-surface-offset));
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+      color: inherit;
+    }
+
+    .app-shell {
+      width: min(1220px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: var(--space-6) 0 var(--space-10);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      align-items: center;
+      margin-bottom: var(--space-6);
+      padding: var(--space-4) var(--space-5);
+      background: color-mix(in oklab, var(--color-surface) 88%, transparent);
+      border: 1px solid rgba(127,127,127,.16);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand {
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 55%, white));
+      display: grid;
+      place-items: center;
+      color: white;
+      flex: 0 0 auto;
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    h1 {
+      font: 600 var(--text-xl)/1.08 var(--font-display);
+    }
+
+    .subtitle {
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+      max-width: 65ch;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(320px, 470px) minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--color-surface) 92%, transparent);
+      border: 1px solid rgba(127,127,127,.16);
+      border-radius: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .left-panel {
+      padding: var(--space-6);
+      position: sticky;
+      top: 1rem;
+      align-self: start;
+    }
+
+    .right-panel {
+      padding: var(--space-6);
+    }
+
+    .step-label {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--color-text-faint);
+      margin-bottom: var(--space-2);
+    }
+
+    .step-title {
+      font: 600 var(--text-lg)/1.2 var(--font-display);
+      margin-bottom: var(--space-2);
+    }
+
+    .step-text {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-5);
+    }
+
+    .progress {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin: var(--space-5) 0 var(--space-6);
+    }
+
+    .pill, .theme-toggle, .ghost-btn, .primary-btn, .step-option {
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      transition: .18s ease;
+    }
+
+    .pill {
+      padding: .5rem .8rem;
+      background: var(--color-surface-2);
+      border-color: rgba(127,127,127,.14);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      cursor: pointer;
+    }
+
+    .pill.active {
+      background: var(--color-primary-highlight);
+      color: var(--color-primary);
+    }
+
+    .pill.done {
+      background: color-mix(in oklab, var(--color-success) 18%, var(--color-surface));
+      color: var(--color-success);
+    }
+
+    .theme-toggle, .ghost-btn {
+      background: var(--color-surface-2);
+      border-color: rgba(127,127,127,.18);
+      padding: .72rem .95rem;
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: var(--color-primary);
+      color: white;
+      padding: .82rem 1.1rem;
+      cursor: pointer;
+    }
+
+    .primary-btn:hover { background: var(--color-primary-hover); }
+    .theme-toggle:hover, .ghost-btn:hover { background: var(--color-surface-offset); }
+
+    .options {
+      display: grid;
+      gap: .8rem;
+    }
+
+    .step-option {
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      padding: 1rem 1rem 1rem 1.05rem;
+      background: var(--color-surface-2);
+      border-color: rgba(127,127,127,.16);
+    }
+
+    .step-option strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: .2rem;
+    }
+
+    .step-option span {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .step-option:hover {
+      border-color: color-mix(in oklab, var(--color-primary) 45%, var(--color-border));
+      background: color-mix(in oklab, var(--color-primary-highlight) 60%, var(--color-surface-2));
+    }
+
+    .step-nav {
+      display: flex;
+      gap: .75rem;
+      margin-top: var(--space-5);
+    }
+
+    .meta-grid, .summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .summary.summary-three {
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: .45rem;
+    }
+
+    .field label {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .field input, .field select, .output-box {
+      width: 100%;
+      padding: .82rem .95rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(127,127,127,.18);
+      background: var(--color-surface-2);
+    }
+
+    .summary-card {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface-2);
+      border: 1px solid rgba(127,127,127,.14);
+    }
+
+    .summary-card h3 {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: .5rem;
+    }
+
+    .summary-card p { margin: 0; }
+
+    .inline-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-bottom: var(--space-5);
+    }
+
+    .output-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: .55rem;
+    }
+
+    .output-box {
+      min-height: 320px;
+      resize: vertical;
+    }
+
+    .checkbox-list {
+      display: grid;
+      gap: .75rem;
+    }
+
+    .checkbox-item {
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start;
+      padding: .9rem 1rem;
+      background: var(--color-surface-2);
+      border: 1px solid rgba(127,127,127,.15);
+      border-radius: var(--radius-md);
+    }
+
+    .checkbox-item input {
+      margin-top: .25rem;
+      transform: scale(1.15);
+      accent-color: var(--color-primary);
+    }
+
+    .checkbox-item strong {
+      display: block;
+      margin-bottom: .15rem;
+    }
+
+    .status-box {
+      margin-top: var(--space-4);
+      padding: .95rem 1rem;
+      border-radius: var(--radius-md);
+      background: color-mix(in oklab, var(--color-surface-offset) 75%, transparent);
+      border: 1px solid rgba(127,127,127,.15);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .status-box.good {
+      color: var(--color-success);
+      border-color: color-mix(in oklab, var(--color-success) 28%, var(--color-border));
+      background: color-mix(in oklab, var(--color-success) 12%, var(--color-surface));
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .left-panel { position: static; }
+      .summary, .summary.summary-three, .meta-grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 5.5h12"/>
+            <path d="M6 10.5h8"/>
+            <path d="M6 15.5h12"/>
+            <path d="M6 20h8"/>
+            <path d="M18.5 8.5 21 11l-2.5 2.5"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Zeugnisbemerkungen Klassen 7–10</h1>
+          <p class="subtitle">Wähle Jahrgang, Halbjahr und die passenden Entscheidungen im Fließschema. Die Textbausteine werden automatisch zusammengestellt.</p>
+        </div>
+      </div>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Farbschema wechseln">🌙 / ☀️</button>
+    </header>
+
+    <main class="layout">
+      <section class="panel left-panel">
+        <div class="step-label">Fließschema</div>
+        <h2 class="step-title">Entscheidungsweg</h2>
+        <p class="step-text">Differenzierung, Abschlussblock und sonstige Bemerkungen passen sich automatisch an Jahrgang und Halbjahr an.</p>
+        <div class="progress" id="progress"></div>
+        <div id="step-container"></div>
+      </section>
+
+      <section class="panel right-panel">
+        <div class="step-label">Ausgabe</div>
+        <h2 class="step-title">Bemerkung zusammenstellen</h2>
+
+        <div class="meta-grid">
+          <div class="field">
+            <label for="yearLevel">Jahrgang</label>
+            <select id="yearLevel">
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9" selected>9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="halfYear">Halbjahr</label>
+            <select id="halfYear">
+              <option value="1">1. Halbjahr</option>
+              <option value="2" selected>2. Halbjahr</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="studentName">Name / Platzhalter</label>
+            <input id="studentName" type="text" value="@NAME" />
+          </div>
+          <div class="field">
+            <label for="ersie">Pronomen-Platzhalter</label>
+            <input id="ersie" type="text" value="@ERSIE" />
+          </div>
+          <div class="field">
+            <label for="dateValue">Zeugnisdatum</label>
+            <input id="dateValue" type="text" value="08.07.2026" />
+          </div>
+          <div class="field">
+            <label for="customIntro">Freier Zusatz am Ende</label>
+            <input id="customIntro" type="text" placeholder="z. B. Teilnahme am Schüleraustausch" />
+          </div>
+        </div>
+
+        <div class="summary summary-three">
+          <div class="summary-card"><h3>Differenzierung</h3><p id="summary-diff">Noch nicht ausgewählt.</p></div>
+          <div class="summary-card"><h3 id="summary-exam-label">Abschluss</h3><p id="summary-exam">Noch nicht geprüft.</p></div>
+          <div class="summary-card"><h3>Sonstiges</h3><p id="summary-other">Noch nichts ergänzt.</p></div>
+        </div>
+
+        <div class="inline-actions">
+          <button class="primary-btn" type="button" id="copyBtn">Text kopieren</button>
+          <button class="ghost-btn" type="button" id="resetBtn">Alle Entscheidungen zurücksetzen</button>
+        </div>
+
+        <div class="output-label">
+          <strong>Bemerkungsfeld</strong>
+        </div>
+        <textarea id="output" class="output-box" spellcheck="false"></textarea>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const state = {
+      studentName: '@NAME',
+      ersie: '@ERSIE',
+      dateValue: '08.07.2026',
+      customIntro: '',
+      yearLevel: '9',
+      halfYear: '2',
+      differentiation: null,
+      bbrAchieved: null,
+      abschluss: null,
+      others: ['epochal']
+    };
+
+    const differentiationOptions = {
+      er: { label: 'Alle E-Niveaus', summary: 'Alle relevanten Fächer überwiegend auf ER-Niveau' },
+      gr: { label: 'Alle G-Niveaus', summary: 'Alle relevanten Fächer überwiegend auf GR-Niveau' },
+      mixed: { label: 'Niveaus gemischt', summary: 'Gemischte GR-/ER-Leistungen' },
+      lernen: { label: 'Lernen', summary: 'Förderschwerpunkt Lernen' }
+    };
+
+function getCompletionOptions() {
+  if (state.differentiation === 'lernen' && state.yearLevel === '10' && state.halfYear === '2') {
+    return {
+      ohne: {
+        label: 'Ohne Abschluss', summary: 'Kein Abschluss erreicht',
+        text: '@ERSIE hat die allgemeine Schulpflicht erfüllt.'
+      },
+      boa: {
+        label: 'BOA erreicht', summary: 'BOA erreicht',
+        text: '@ERSIE hat den berufsorientierten Abschluss erreicht.'
+      },
+      gleichwertig: {
+        label: 'BBR gleichwertig erreicht', summary: 'BBR gleichwertig erreicht',
+        text: '@ERSIE hat den der Berufsbildungsreife gleichwertigen Abschluss erreicht.'
+      }
+    };
+  }
+
+  return {
+    ohne: {
+      label: 'Ohne Abschluss', summary: 'Kein Abschluss erreicht',
+      text: '@NAME hat die allgemeine Schulpflicht erfüllt.'
+    },
+    bbr: {
+      label: 'BBR erreicht', summary: 'BBR erreicht',
+      text: '@NAME hat die Berufsbildungsreife erworben. Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 1 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note … und im Fach Mathematik die Note … erzielt.'
+    },
+    ebbr: {
+      label: 'EBBR erreicht', summary: 'EBBR erreicht',
+      text: '@NAME hat die erweiterte Berufsbildungsreife erworben.'
+    },
+    msa: {
+      label: 'MSA erreicht', summary: 'MSA erreicht',
+      text: '@NAME hat den mittleren Schulabschluss erworben.'
+    },
+    msaugo: {
+      label: 'MSA ÜGO erreicht', summary: 'MSA ÜGO erreicht',
+      text: '@NAME hat den mittleren Schulabschluss und die Berechtigung zum Übergang in die gymnasiale Oberstufe erworben.'
+    }
+  };
+}
+
+    const otherOptions = [
+      { key: 'epochal', label: 'Epochal', summary: 'Kunst und Musik bzw. ITG und WAT', text: 'Die Fächer Bildende Kunst und Musik wurden epochal unterrichtet.' },
+      { key: 'daz', label: 'DaZ', text: '@ERSIE hat an ergänzenden Fördermaßnahmen zur Verbesserung der deutschen Sprachkenntnisse teilgenommen.' },
+      { key: 'klassensprecher', label: 'Klassensprecher', summary: 'entsprechend des Geschlechtes anpassen', text: '@NAME war KlassensprecherIn.' },
+      { key: 'ob', label: 'o. B.', summary: 'Fächer notieren', text: '@NAME konnte in den Fächern [hier benennen] nicht beurteilt werden, da @ERSIE dem Unterricht entschuldigt fernbleiben musste.' },
+      { key: 'betriebspraktikum', label: 'erfolgreich eventuell entfernen', summary: 'Betriebspraktikum erfolgreich absolviert', text: '@NAME hat erfolgreich am 3-wöchigen Betriebspraktikum teilgenommen.' },
+      { key: 'praxislernen', label: 'Praxisklasse', summary: 'Praxisklasse besucht', text: '' },
+      { key: 'ag', label: 'AG-Teilnahme', summary: 'Name der AG angeben', text: '@NAME hat mit (gutem/sehr gutem) Erfolg an der Arbeitsgemeinschaft ... teilgenommen.' },
+      { key: 'girlsday', label: 'Girls/Boys Day', summary: 'Girls/Boys Day auswählen', text: '@NAME hat am Girls Day/Boys Day teilgenommen.' },
+      { key: 'zulassung10h1', label: 'Freiw. Teilnahme MSA', summary: 'Freiw. Teilnahme MSA empfohlen', text: '@Name erfüllt die Leistungsvoraussetzungen für die Zulassung zur gemeinsamen Prüfung zum Erwerb der erweiterten Berufsbildungsreife und zum mittleren Schulabschluss. Die Teilnahme wird empfohlen.' },
+      { key: 'schulersatzmassnahme', label: 'Schulersatzmaßnahme', summary: 'Schulersatzmaßnahme angeben', text: '@Name besucht eine Schulersatzmaßnahme ... Eine Benotung durch die Schule kann daher nicht erfolgen.' }
+    ];
+
+    function replaceTokens(text) {
+      return text
+        .replaceAll('@NAME', state.studentName || '@NAME')
+        .replaceAll('@Name', state.studentName || '@NAME')
+        .replaceAll('@ERSIE', state.ersie || '@ERSIE');
+    }
+
+    function isCompletionMode() {
+      return state.yearLevel === '10' && state.halfYear === '2';
+    }
+
+    function bbrDecisionAllowed() {
+      if (state.differentiation === 'lernen') return false;
+      return state.yearLevel === '9' && state.halfYear === '2';
+    }
+
+    function getExamBlockLabel() {
+      return isCompletionMode() ? 'Abschluss' : 'Abschluss';
+    }
+
+    function getExamBlockTitle() {
+      return isCompletionMode() ? '2. Abschluss festlegen' : '2. Erreichten Abschluss festlegen';
+    }
+
+    function getExamBlockText() {
+      return isCompletionMode()
+        ? 'Im 2. Halbjahr der Jahrgangsstufe 10 wird der erreichte Abschluss ausgewählt.'
+        : 'Erreichten Abschluss auswählen.';
+    }
+
+    function getOtherOptionText(option) {
+  if (option.key === 'epochal') {
+    if (state.yearLevel === '7') {
+      return 'Die Fächer Bildende Kunst und Musik und ITG und WAT wurden epochal unterrichtet.';
+    }
+    return 'Die Fächer Bildende Kunst und Musik wurden epochal unterrichtet.';
+  }
+
+  if (option.key === 'praxislernen') {
+    if (state.yearLevel === '9') {
+      return '@NAME hat in Klasse 9 im Dualen Lernen gemäß § 29 (3) und (4) Sek I-VO an einer Praxislerngruppe teilgenommen. Die Teilnahme an der Praxisklasse wird durch ein Zertifikat nachgewiesen. Die Beurteilung der Leistungen in der Praxis liegt diesem Zeugnis als Anlage bei.';
+    }
+    if (state.yearLevel === '10') {
+      return '@NAME hat in Klasse 9 und 10 im Dualen Lernen gemäß § 29 (3) und (4) Sek I-VO an einer Praxislerngruppe teilgenommen. Die Teilnahme an der Praxisklasse wird durch ein Zertifikat nachgewiesen. Die Beurteilung der Leistungen in der Praxis liegt diesem Zeugnis als Anlage bei.';
+    }
+    return '';
+  }
+
+  return option.text;
+}
+
+    function getVisibleOtherOptions() {
+      return otherOptions.filter(option => {
+        if (option.key === 'girlsday') return state.yearLevel === '7' || state.yearLevel === '8';
+        if (option.key === 'praxislernen') return state.yearLevel === '9' || state.yearLevel === '10';
+        if (option.key === 'betriebspraktikum') return state.yearLevel === '9' || state.yearLevel === '10';
+        if (option.key === 'zulassung10h1') return state.yearLevel === '10' && state.halfYear === '1';
+        return true;
+      });
+    }
+
+    function getDifferentiationIntroText() {
+      if (state.yearLevel === '7' && state.halfYear === '1') {
+        return 'Im Rahmen der Leistungsdifferenzierung gemäß § 27 (1) Sek-I-VO wurde das Fach Englisch binnendifferenziert unterrichtet.';
+      }
+      if (state.yearLevel === '7' && state.halfYear === '2') {
+        return 'Im Rahmen der Leistungsdifferenzierung gemäß § 27 (1) Sek-I-VO wurden die Fächer Englisch und Mathematik binnendifferenziert unterrichtet.';
+      }
+      if (state.yearLevel === '8') {
+        return 'Im Rahmen der Leistungsdifferenzierung gemäß § 27 (1) Sek-I-VO wurden die Fächer Englisch und Mathematik binnendifferenziert unterrichtet.';
+      }
+      return 'Im Rahmen der Leistungsdifferenzierung gemäß § 27 (1) Sek-I-VO wurde das Fach Englisch in Kursen und die Fächer Mathematik, Deutsch und Chemie binnendifferenziert unterrichtet.';
+    }
+
+    function getDifferentiationEndingText() {
+      if (!state.differentiation) return '';
+
+      if (state.differentiation === 'lernen') {
+        return 'Die Fächer @LE_Fächer wurden auf dem Anforderungsniveau des sonderpädagogischen Förderschwerpunktes "Lernen" unterrichtet und bewertet.';
+      }
+
+      if (state.yearLevel === '7' && state.halfYear === '1') {
+        if (state.differentiation === 'er') return 'Die Leistungen wurden im Fach Englisch überwiegend auf ER-Niveau erbracht.';
+        if (state.differentiation === 'gr') return 'Die Leistungen wurden im Fach Englisch überwiegend auf GR-Niveau erbracht.';
+      }
+
+      if ((state.yearLevel === '7' && state.halfYear === '2') || state.yearLevel === '8') {
+        if (state.differentiation === 'er') return 'Die Leistungen wurden in den Fächern Englisch und Mathematik überwiegend auf ER-Niveau erbracht.';
+        if (state.differentiation === 'gr') return 'Die Leistungen wurden in den Fächern Englisch und Mathematik überwiegend auf GR-Niveau erbracht.';
+        if (state.differentiation === 'mixed') return 'Die Leistungen wurden im Fach Englisch und/oder im Fach Mathematik sowohl auf GR-Niveau als auch auf ER-Niveau erbracht.';
+      }
+
+      if (state.differentiation === 'er') {
+        return 'Die Leistungen wurden @IMFACHINDENFÄCHERN_ER @ER_Fächer überwiegend auf ER-Niveau erbracht.';
+      }
+      if (state.differentiation === 'gr') {
+        return 'Die Leistungen wurden @IMFACHINDENFÄCHERN_GR @GR_Fächer überwiegend auf GR-Niveau erbracht.';
+      }
+      if (state.differentiation === 'mixed') {
+        return 'Die Leistungen wurden @IMFACHINDENFÄCHERN_GR @GR_Fächer überwiegend auf GR-Niveau, @IMFACHINDENFÄCHERN_ER @ER_Fächer überwiegend auf ER-Niveau erbracht.';
+      }
+
+      return '';
+    }
+
+    function getVisibleDifferentiationOptions() {
+      const options = {
+        er: { ...differentiationOptions.er },
+        gr: { ...differentiationOptions.gr },
+        mixed: { ...differentiationOptions.mixed },
+        lernen: { ...differentiationOptions.lernen }
+      };
+
+      if (state.yearLevel === '7' && state.halfYear === '1') {
+        delete options.mixed;
+        options.er.summary = 'Englisch überwiegend auf ER-Niveau';
+        options.gr.summary = 'Englisch überwiegend auf GR-Niveau';
+        options.lernen.summary = 'Förderschwerpunkt Lernen';
+        return options;
+      }
+
+      if ((state.yearLevel === '7' && state.halfYear === '2') || state.yearLevel === '8') {
+        options.er.summary = 'Englisch und Mathematik überwiegend auf ER-Niveau';
+        options.gr.summary = 'Englisch und Mathematik überwiegend auf GR-Niveau';
+        options.mixed.summary = 'Englisch/Mathematik mit gemischten Niveaus';
+        options.lernen.summary = 'Förderschwerpunkt Lernen';
+        return options;
+      }
+
+      return options;
+    }
+
+    function getDifferentiationText() {
+      if (!state.differentiation) return '';
+      const intro = getDifferentiationIntroText();
+      const ending = getDifferentiationEndingText();
+      if (!intro && !ending) return '';
+      if (!intro) return ending;
+      if (!ending) return intro;
+      return `${intro} ${ending}`.trim();
+    }
+
+    function getBbrDecisionState() {
+      if (!bbrDecisionAllowed()) {
+        return { className: '', message: 'In diesem Jahrgang/Halbjahr wird keine BBR-Entscheidung erfasst.' };
+      }
+      if (state.bbrAchieved === 'yes') {
+        return { className: 'good', message: 'Der BBR wurde als erreicht markiert. Der Standardsatz wird übernommen.' };
+      }
+      if (state.bbrAchieved === 'no') {
+        return { className: '', message: 'Der BBR wurde als nicht erreicht markiert. Es wird kein Abschlusssatz ergänzt.' };
+      }
+      return { className: '', message: 'Noch keine Entscheidung getroffen. Es wird noch kein Abschlusssatz übernommen.' };
+    }
+
+    function getExamSummaryText() {
+      if (isCompletionMode()) {
+        const options = getCompletionOptions();
+return state.abschluss && options[state.abschluss]
+  ? options[state.abschluss].label
+  : 'Noch nicht ausgewählt.';
+      }
+      return getBbrDecisionState().message;
+    }
+
+    function buildBbrText() {
+  return `${state.studentName || '@NAME'} hat mit dem Zeugnis der Jahrgangsstufe 9 vom ${state.dateValue || '08.07.2026'} und den auf dem Beiblatt „Schul Z 211 Bei“ vermerkten Leistungen in den vergleichenden Arbeiten die Berufsbildungsreife erworben.`;
+}
+
+    const steps = [
+      {
+        id: 'differentiation',
+        label: 'Differenzierung',
+        title: '1. Differenzierung wählen',
+        text: 'Die Auswahl hängt von Jahrgang und Halbjahr ab.',
+        render: () => {
+          const visibleOptions = getVisibleDifferentiationOptions();
+          return `
+            <div class="options">
+              ${Object.entries(visibleOptions).map(([key, option]) => `
+                <button class="step-option" type="button" data-step-choice="differentiation" data-value="${key}">
+                  <strong>${option.label}</strong>
+                  <span>${option.summary}</span>
+                </button>
+              `).join('')}
+            </div>`;
+        }
+      },
+      {
+        id: 'exam',
+        label: getExamBlockLabel(),
+        title: getExamBlockTitle(),
+        text: getExamBlockText(),
+        render: () => {
+          if (isCompletionMode()) {
+            return `
+              <div class="options">
+               ${Object.entries(getCompletionOptions()).map(([key, option]) => `
+                  <button class="step-option" type="button" data-step-choice="abschluss" data-value="${key}">
+                    <strong>${option.label}</strong>
+                  </button>
+                `).join('')}
+              </div>`;
+          }
+
+          if (!bbrDecisionAllowed()) {
+            return `
+              <div class="status-box">
+                In diesem Jahrgang und Halbjahr wird kein eigener Abschlussblock erfasst.
+              </div>`;
+          }
+
+          return `
+            <div class="options">
+              <button class="step-option" type="button" data-step-choice="bbrAchieved" data-value="yes">
+                <strong>BBR erreicht</strong>
+                <span>Der Standardsatz zum erreichten BBR-Abschluss wird eingefügt.</span>
+              </button>
+              <button class="step-option" type="button" data-step-choice="bbrAchieved" data-value="no">
+                <strong>BBR nicht erreicht</strong>
+                <span>Es wird kein zusätzlicher Abschlusssatz eingefügt.</span>
+              </button>
+            </div>
+            <div class="status-box ${getBbrDecisionState().className}">${getBbrDecisionState().message}</div>`;
+        }
+      },
+      {
+        id: 'others',
+        label: 'Sonstiges',
+        title: '3. Sonstige Bemerkungen',
+        text: 'Hier steht alles aus dem Abschnitt Sonstiges zur Mehrfachauswahl bereit.',
+        render: () => `
+          <div class="checkbox-list">
+            ${getVisibleOtherOptions().map(option => `
+              <label class="checkbox-item">
+                <input type="checkbox" data-other-option="${option.key}" ${state.others.includes(option.key) ? 'checked' : ''}>
+                <span><strong>${option.label}</strong>${option.summary}</span>
+              </label>
+            `).join('')}
+          </div>`
+      }
+    ];
+
+    let currentStepIndex = 0;
+    const progressEl = document.getElementById('progress');
+    const stepContainer = document.getElementById('step-container');
+    const outputEl = document.getElementById('output');
+
+    function buildOutput() {
+      const firstBlockParts = [];
+      const secondBlockParts = [];
+
+      if (state.differentiation) {
+        firstBlockParts.push(replaceTokens(getDifferentiationText()));
+      }
+
+      const sonstigeBlock = getVisibleOtherOptions()
+        .filter(o => state.others.includes(o.key))
+        .map(option => replaceTokens(getOtherOptionText(option)))
+        .filter(Boolean)
+        .join(' ');
+
+      if (sonstigeBlock) {
+        firstBlockParts.push(sonstigeBlock);
+      }
+
+      if (bbrDecisionAllowed() && state.bbrAchieved === 'yes') {
+        secondBlockParts.push(buildBbrText());
+      }
+
+      const completionOptions = getCompletionOptions();
+
+if (isCompletionMode() && state.abschluss && completionOptions[state.abschluss]) {
+  secondBlockParts.push(replaceTokens(completionOptions[state.abschluss].text));
+}
+
+      if (state.customIntro.trim()) {
+        secondBlockParts.push(state.customIntro.trim());
+      }
+
+      const firstBlock = firstBlockParts.join('\n');
+      const secondBlock = secondBlockParts.join(' ');
+
+      if (firstBlock && secondBlock) {
+        outputEl.value = `${firstBlock}\n\n${secondBlock}`;
+      } else if (firstBlock) {
+        outputEl.value = firstBlock;
+      } else if (secondBlock) {
+        outputEl.value = secondBlock;
+      } else {
+        outputEl.value = '';
+      }
+
+      document.getElementById('summary-diff').textContent =
+        state.differentiation ? differentiationOptions[state.differentiation].label : 'Noch nicht ausgewählt.';
+
+      document.getElementById('summary-exam-label').textContent = getExamBlockLabel();
+      document.getElementById('summary-exam').textContent = getExamSummaryText();
+
+      const selectedOtherLabels = getVisibleOtherOptions()
+        .filter(o => state.others.includes(o.key))
+        .map(o => o.label);
+
+      document.getElementById('summary-other').textContent =
+        selectedOtherLabels.length ? selectedOtherLabels.join(', ') : 'Noch nichts ergänzt.';
+    }
+
+    function renderProgress() {
+      progressEl.innerHTML = steps.map((step, index) => {
+        const cls = index < currentStepIndex ? 'pill done' : index === currentStepIndex ? 'pill active' : 'pill';
+        return `<button type="button" class="${cls}" data-jump="${index}">${index + 1}. ${step.label}</button>`;
+      }).join('');
+    }
+
+    function renderStep() {
+      const step = steps[currentStepIndex];
+      stepContainer.innerHTML = `
+        <article>
+          <div class="step-label">${step.label}</div>
+          <h3 class="step-title">${step.title}</h3>
+          <p class="step-text">${step.text}</p>
+          ${step.render()}
+          <div class="step-nav">
+            <button class="ghost-btn" type="button" ${currentStepIndex === 0 ? 'disabled' : ''} id="backBtn">Zurück</button>
+            <button class="ghost-btn" type="button" ${currentStepIndex === steps.length - 1 ? 'disabled' : ''} id="skipBtn">Weiter</button>
+          </div>
+        </article>`;
+
+      document.querySelectorAll('[data-step-choice]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const stepKey = btn.dataset.stepChoice;
+          const value = btn.dataset.value;
+          state[stepKey] = value;
+
+          if (stepKey === 'differentiation') {
+            if (value === 'lernen') {
+              state.bbrAchieved = null;
+            }
+            if (!isCompletionMode()) {
+              state.abschluss = null;
+            }
+          }
+
+          if (stepKey === 'bbrAchieved') {
+            state.abschluss = null;
+          }
+
+          if (stepKey === 'abschluss') {
+            state.bbrAchieved = null;
+          }
+
+          buildOutput();
+
+          if (currentStepIndex < steps.length - 1) {
+            currentStepIndex += 1;
+            renderAll();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-other-option]').forEach(box => {
+        box.addEventListener('change', () => {
+          const key = box.dataset.otherOption;
+          if (box.checked) {
+            if (!state.others.includes(key)) state.others.push(key);
+          } else {
+            state.others = state.others.filter(item => item !== key);
+          }
+          buildOutput();
+        });
+      });
+
+      document.getElementById('backBtn')?.addEventListener('click', () => {
+        if (currentStepIndex > 0) {
+          currentStepIndex -= 1;
+          renderAll();
+        }
+      });
+
+      document.getElementById('skipBtn')?.addEventListener('click', () => {
+        if (currentStepIndex < steps.length - 1) {
+          currentStepIndex += 1;
+          renderAll();
+        }
+      });
+    }
+
+    function bindProgressButtons() {
+      document.querySelectorAll('[data-jump]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentStepIndex = Number(btn.dataset.jump);
+          renderAll();
+        });
+      });
+    }
+
+    function resetDependentState() {
+      const visibleDiffOptions = getVisibleDifferentiationOptions();
+      if (state.differentiation && !visibleDiffOptions[state.differentiation]) {
+        state.differentiation = null;
+      }
+
+      if (!bbrDecisionAllowed()) {
+        state.bbrAchieved = null;
+      }
+
+      if (!isCompletionMode()) {
+        state.abschluss = null;
+      }
+
+      state.others = state.others.filter(key =>
+        getVisibleOtherOptions().some(option => option.key === key)
+      );
+    }
+
+    function renderAll() {
+      resetDependentState();
+      renderProgress();
+      renderStep();
+      buildOutput();
+      bindProgressButtons();
+    }
+
+    document.getElementById('yearLevel').addEventListener('change', e => {
+      state.yearLevel = e.target.value;
+      state.bbrAchieved = null;
+      state.abschluss = null;
+      renderAll();
+    });
+
+    document.getElementById('halfYear').addEventListener('change', e => {
+      state.halfYear = e.target.value;
+      state.bbrAchieved = null;
+      state.abschluss = null;
+      renderAll();
+    });
+
+    document.getElementById('studentName').addEventListener('input', e => {
+      state.studentName = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('ersie').addEventListener('input', e => {
+      state.ersie = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('dateValue').addEventListener('input', e => {
+      state.dateValue = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('customIntro').addEventListener('input', e => {
+      state.customIntro = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(outputEl.value);
+        const btn = document.getElementById('copyBtn');
+        const old = btn.textContent;
+        btn.textContent = 'Kopiert';
+        setTimeout(() => btn.textContent = old, 1200);
+      } catch {
+        outputEl.select();
+        document.execCommand('copy');
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      state.differentiation = null;
+      state.bbrAchieved = null;
+      state.abschluss = null;
+      state.others = ['epochal'];
+      state.customIntro = '';
+      state.studentName = '@NAME';
+      state.ersie = '@ERSIE';
+      state.dateValue = '08.07.2026';
+
+      document.getElementById('studentName').value = '@NAME';
+      document.getElementById('ersie').value = '@ERSIE';
+      document.getElementById('dateValue').value = '08.07.2026';
+      document.getElementById('customIntro').value = '';
+
+      currentStepIndex = 0;
+      renderAll();
+    });
+
+    document.querySelector('[data-theme-toggle]').addEventListener('click', () => {
+      const root = document.documentElement;
+      root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    document.getElementById('yearLevel').value = '9';
+    document.getElementById('halfYear').value = '2';
+    state.yearLevel = '9';
+    state.halfYear = '2';
+
+    renderAll();
+  </script>
+</body>
+</html>
