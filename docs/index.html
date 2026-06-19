@@ -504,20 +504,24 @@ function getCompletionOptions() {
       label: 'Ohne Abschluss', summary: 'Kein Abschluss erreicht',
       text: '@NAME hat die allgemeine Schulpflicht erfüllt.'
     },
-    bbr: {
-      label: 'BBR erreicht', summary: 'BBR erreicht',
+    bbr9: {
+      label: 'BBR in 9', summary: 'Noten angeben',
       text: '@NAME hat die Berufsbildungsreife erworben. Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 1 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note … und im Fach Mathematik die Note … erzielt.'
     },
+    bbr10: {
+      label: 'BBR in 10 ', summary: 'Noten angeben',
+      text: '@NAME hat die Berufsbildungsreife erworben. Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 2 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note … und im Fach Mathematik die Note … erzielt.'
+    },
     ebbr: {
-      label: 'EBBR erreicht', summary: 'EBBR erreicht',
+      label: 'EBBR', summary: 'EBBR erreicht',
       text: '@NAME hat die erweiterte Berufsbildungsreife erworben.'
     },
     msa: {
-      label: 'MSA erreicht', summary: 'MSA erreicht',
+      label: 'MSA', summary: 'MSA erreicht',
       text: '@NAME hat den mittleren Schulabschluss erworben.'
     },
     msaugo: {
-      label: 'MSA ÜGO erreicht', summary: 'MSA ÜGO erreicht',
+      label: 'MSA ÜGO', summary: 'MSA ÜGO erreicht',
       text: '@NAME hat den mittleren Schulabschluss und die Berechtigung zum Übergang in die gymnasiale Oberstufe erworben.'
     }
   };
@@ -736,6 +740,7 @@ return state.abschluss && options[state.abschluss]
                ${Object.entries(getCompletionOptions()).map(([key, option]) => `
                   <button class="step-option" type="button" data-step-choice="abschluss" data-value="${key}">
                     <strong>${option.label}</strong>
+                    <span>${option.text}</span>
                   </button>
                 `).join('')}
               </div>`;
