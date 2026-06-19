@@ -787,6 +787,7 @@ return state.abschluss && options[state.abschluss]
     function buildOutput() {
       const firstBlockParts = [];
       const secondBlockParts = [];
+      const thirdBlockParts = [];
 
       if (state.differentiation) {
         firstBlockParts.push(replaceTokens(getDifferentiationText()));
@@ -799,11 +800,11 @@ return state.abschluss && options[state.abschluss]
         .join(' ');
 
       if (sonstigeBlock) {
-        firstBlockParts.push(sonstigeBlock);
+        secondBlockParts.push(sonstigeBlock);
       }
 
       if (bbrDecisionAllowed() && state.bbrAchieved === 'yes') {
-        secondBlockParts.push(buildBbrText());
+        thirdBlockParts.push(buildBbrText());
       }
 
       const completionOptions = getCompletionOptions();
@@ -817,17 +818,26 @@ if (isCompletionMode() && state.abschluss && completionOptions[state.abschluss])
       }
 
       const firstBlock = firstBlockParts.join('\n');
-      const secondBlock = secondBlockParts.join(' ');
+      const secondBlock = secondBlockParts.join('\n');
+      const thirdBlock = thirdBlockParts.join(' ');
 
-      if (firstBlock && secondBlock) {
+      const allBlocks = [firstBlock, secondBlock, thirdBlock].filter(Boolean);
+      outputEl.value = allBlocks.join('\n\n');
+
+      /*
+      if (firstBlock && secondBlock && thirdBlock) {
+        outputEl.value = `${firstBlock}\n\n${secondBlock}\n\n${thirdBlock}`;
+      } else if (firstBlock && secondBlock) {
         outputEl.value = `${firstBlock}\n\n${secondBlock}`;
       } else if (firstBlock) {
         outputEl.value = firstBlock;
       } else if (secondBlock) {
         outputEl.value = secondBlock;
+      } else if (thirdBlock) {
+        outputEl.value = thirdBlock;
       } else {
         outputEl.value = '';
-      }
+      }*/
 
       document.getElementById('summary-diff').textContent =
         state.differentiation ? differentiationOptions[state.differentiation].label : 'Noch nicht ausgewählt.';
