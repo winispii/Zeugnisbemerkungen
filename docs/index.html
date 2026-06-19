@@ -810,7 +810,7 @@ return state.abschluss && options[state.abschluss]
       const completionOptions = getCompletionOptions();
 
 if (isCompletionMode() && state.abschluss && completionOptions[state.abschluss]) {
-  secondBlockParts.push(replaceTokens(completionOptions[state.abschluss].text));
+  thirdBlockParts.push(replaceTokens(completionOptions[state.abschluss].text));
 }
 
       if (state.customIntro.trim()) {
