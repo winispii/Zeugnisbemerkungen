@@ -486,7 +486,8 @@
     schulersatzmassnahmeName: '',
     obFaecher: '',
     klassensprecherGeschlecht: 'neutral',
-    betriebspraktikumErfolg: 'erfolgreich'
+    betriebspraktikumErfolg: 'erfolgreich',
+    girlsBoysDayText: 'Girls-Day'
   };
 
   const differentiationOptions = {
@@ -768,6 +769,9 @@
       }
       return '@NAME hat erfolgreich am 3-wöchigen Betriebspraktikum teilgenommen.';
     }
+    if (option.key === 'girlsday') {
+  return `@NAME hat am ${state.girlsBoysDayText || 'Girls Day'} teilgenommen.`;
+}
 
     return option.text;
   }
@@ -831,6 +835,15 @@
             </select>
           </div>
         ` : ''}
+        ${state.others.includes('girlsday') ? `
+  <div class="field">
+    <label for="girlsBoysDayTextTop">Girls-/Boys-Day</label>
+    <select id="girlsBoysDayTextTop">
+      <option value="Girls Day" ${state.girlsBoysDayText === 'Girls Day' ? 'selected' : ''}>Girls Day</option>
+      <option value="Boys Day" ${state.girlsBoysDayText === 'Boys Day' ? 'selected' : ''}>Boys Day</option>
+    </select>
+  </div>
+` : ''}
       </div>
     `;
 
@@ -870,6 +883,10 @@
       state.betriebspraktikumErfolg = e.target.value;
       buildOutput();
     });
+    document.getElementById('girlsBoysDayTextTop')?.addEventListener('change', e => {
+  state.girlsBoysDayText = e.target.value;
+  buildOutput();
+});
   }
 
   const steps = [
@@ -1196,6 +1213,7 @@
     state.obFaecher = '';
     state.klassensprecherGeschlecht = 'neutral';
     state.betriebspraktikumErfolg = 'erfolgreich';
+    state.girlsBoysDayText = '';
 
     document.getElementById('studentName').value = '@NAME';
     document.getElementById('ersie').value = '@ERSIE';
