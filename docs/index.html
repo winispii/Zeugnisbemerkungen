@@ -589,7 +589,7 @@
     const lowered = raw.toLowerCase().trim();
 
     if (lowered === 'alle fächer' || lowered === 'alle faecher') {
-      return '@NAME konnte nicht beurteilt werden, da @ERSIE dem Unterricht entschuldigt fernbleiben musste. Es wurden alle Fächer nicht beurteilt.';
+      return '@NAME konnte in allen Fächern nicht beurteilt werden, da @ERSIE dem Unterricht entschuldigt fernbleiben musste.';
     }
 
     const hasComma = raw.includes(',');
