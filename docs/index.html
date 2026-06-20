@@ -669,6 +669,9 @@
     if (state.yearLevel === '8') {
       return 'Im Rahmen der Leistungsdifferenzierung gemäß § 27 (1) Sek-I-VO wurden die Fächer Englisch und Mathematik binnendifferenziert unterrichtet.';
     }
+    if (state.others && state.others.includes('praxislernen')) {
+      return 'Im Rahmen der Leistungsdifferenzierung gemäß § 27 (1) Sek-I-VO wurden die Fächer Englisch, Deutsch und Mathematik binnendifferenziert unterrichtet.';
+    }
     return 'Im Rahmen der Leistungsdifferenzierung gemäß § 27 (1) Sek-I-VO wurde das Fach Englisch in Kursen und die Fächer Mathematik, Deutsch und Chemie binnendifferenziert unterrichtet.';
   }
 
