@@ -482,6 +482,9 @@
     others: ['epochal'],
     examDeutsch: '',
     examMathe: '',
+    examDatum9: '23.07.2025',
+    auffangFach: '',
+    auffangNote: '',
     agName: '',
     schulersatzmassnahmeName: '',
     obFaecher: '',
@@ -526,29 +529,19 @@
       },
       bbr9: {
         label: 'BBR in 9',
-        summary: 'Noten angeben',
-        text: '@NAME hat die Berufsbildungsreife erworben. Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 1 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note @DEUTSCHNOTE und im Fach Mathematik die Note @MATHENOTE erzielt.'
+        summary: 'Datum des Abschlusszeugnis 9 angeben',
+        text: '@NAME hat mit dem Zeugnis der Jahrgangsstufe 9 vom @DATUMZEUGNIS9 und den auf dem Beiblatt „Schul Z 211 Bei“ vermerkten Leistungen in den vergleichenden Arbeiten die Berufsbildungsreife erworben.'
       },
       bbr10: {
         label: 'BBR in 10',
         summary: 'Noten angeben',
-        text: '@NAME hat die Berufsbildungsreife erworben. Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 2 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note @DEUTSCHNOTE und im Fach Mathematik die Note @MATHENOTE erzielt.'
+        text: 'Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 2 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note @DEUTSCHNOTE und im Fach Mathematik die Note @MATHENOTE erzielt.'
       },
-      ebbr: {
-        label: 'EBBR',
-        summary: 'EBBR erreicht',
-        text: '@NAME hat die erweiterte Berufsbildungsreife erworben.'
+      auffang: {
+        label: 'BBR 10 mit Auffangregelung',
+        summary: 'Prüfungsfach + Note mit Note 4 oder besser eintragen',
+        text: 'Für den Abschluss galten die Bedingungen gemäß §44 Absatz 5 Sek I-VO; in der gemeinsamen Prüfung der Jahrgangsstufe 10 wurde im Fach @Auffangfach die Note @AuffangNote erzielt.'
       },
-      msa: {
-        label: 'MSA',
-        summary: 'MSA erreicht',
-        text: '@NAME hat den mittleren Schulabschluss erworben.'
-      },
-      msaugo: {
-        label: 'MSA ÜGO',
-        summary: 'MSA ÜGO erreicht',
-        text: '@NAME hat den mittleren Schulabschluss und die Berechtigung zum Übergang in die gymnasiale Oberstufe erworben.'
-      }
     };
   }
 
@@ -612,6 +605,9 @@
         .replaceAll('@ERSIE', state.ersie || '@ERSIE')
         .replaceAll('@DEUTSCHNOTE', state.examDeutsch || '…')
         .replaceAll('@MATHENOTE', state.examMathe || '…')
+        .replaceAll('@DATUMZEUGNIS9', state.examDatum9 || '…')
+        .replaceAll('@Auffangfach', state.auffangFach || '…')
+        .replaceAll('@AuffangNote', state.auffangNote || '…')
         .replaceAll('@AGNAME', state.agName || '...')
         .replaceAll('@SCHULERSATZMASSNAHME', state.schulersatzmassnahmeName || '...')
         .replaceAll('@KLASSENSPRECHERROLLE', getKlassensprecherText())
@@ -650,14 +646,26 @@
   }
 
   function getVisibleOtherOptions() {
-    return otherOptions.filter(option => {
+  return otherOptions
+    .filter(option => {
       if (option.key === 'girlsday') return state.yearLevel === '7' || state.yearLevel === '8';
       if (option.key === 'praxislernen') return state.yearLevel === '9' || state.yearLevel === '10';
       if (option.key === 'betriebspraktikum') return state.yearLevel === '9' || state.yearLevel === '10';
       if (option.key === 'zulassung10h1') return state.yearLevel === '10' && state.halfYear === '1';
       return true;
+    })
+    .map(option => {
+      if (option.key === 'epochal') {
+        return {
+          ...option,
+          summary: state.yearLevel === '7'
+            ? 'Kunst und Musik bzw. ITG und WAT'
+            : 'Kunst und Musik'
+        };
+      }
+      return option;
     });
-  }
+}
 
   function getDifferentiationIntroText() {
     if (state.yearLevel === '7' && state.halfYear === '1') {
@@ -746,17 +754,17 @@
   function getOtherOptionText(option) {
     if (option.key === 'epochal') {
       if (state.yearLevel === '7') {
-        return 'Die Fächer Bildende Kunst und Musik und ITG und WAT wurden epochal unterrichtet.';
+        return 'Die Fächer Bildende Kunst und Musik sowie Wirtschaft-Arbeit-Technik und Informationstechnischer Grundkurs wurden epochal unterrichtet.';
       }
       return 'Die Fächer Bildende Kunst und Musik wurden epochal unterrichtet.';
     }
 
     if (option.key === 'praxislernen') {
       if (state.yearLevel === '9') {
-        return '@NAME hat in Klasse 9 im Dualen Lernen gemäß § 29 (3) und (4) Sek I-VO an einer Praxislerngruppe teilgenommen. Die Teilnahme an der Praxisklasse wird durch ein Zertifikat nachgewiesen. Die Beurteilung der Leistungen in der Praxis liegt diesem Zeugnis als Anlage bei.';
+        return '@ERSIE nimmt in der Jahrgangsstufe 9 an einer besonderen Organisationsform des Dualen Lernens teil. Ein Zertifikat über die Beurteilung der Leistungen in der Paxis liegt dem Zeugnis bei.';
       }
       if (state.yearLevel === '10') {
-        return '@NAME hat in Klasse 9 und 10 im Dualen Lernen gemäß § 29 (3) und (4) Sek I-VO an einer Praxislerngruppe teilgenommen. Die Teilnahme an der Praxisklasse wird durch ein Zertifikat nachgewiesen. Die Beurteilung der Leistungen in der Praxis liegt diesem Zeugnis als Anlage bei.';
+        return '@ERSIE nimmt in den Jahrgangsstufen 9 und 10 an einer besonderen Organisationsform des Dualen Lernens teil. Ein Zertifikat über die Beurteilung der Leistungen in der Paxis liegt dem Zeugnis bei.';
       }
       return '';
     }
@@ -780,117 +788,154 @@
   }
 
   function renderDynamicFields() {
-    const wrap = document.getElementById('dynamic-fields-wrap');
-    if (!wrap) return;
+  const wrap = document.getElementById('dynamic-fields-wrap');
+  if (!wrap) return;
 
-    const showExamFields = isCompletionMode() && (state.abschluss === 'bbr9' || state.abschluss === 'bbr10');
+  const showDatumZeugnis9Field = isCompletionMode() && state.abschluss === 'bbr9';
+  const showExamFields = isCompletionMode() && state.abschluss === 'bbr10';
+  const showAuffangFields = isCompletionMode() && state.abschluss === 'auffang';
 
-    const html = `
-      <div class="helper-grid">
-        ${showExamFields ? `
-          <div class="field">
-            <label for="examDeutschTop">BBR-Note Deutsch</label>
-            <input id="examDeutschTop" type="text" value="${state.examDeutsch}" placeholder="z. B. 3" />
-          </div>
-          <div class="field">
-            <label for="examMatheTop">BBR-Note Mathematik</label>
-            <input id="examMatheTop" type="text" value="${state.examMathe}" placeholder="z. B. 4" />
-          </div>
-        ` : ''}
+  const html = `
+    <div class="helper-grid">
+      ${showDatumZeugnis9Field ? `
+        <div class="field">
+          <label for="DatumZeugnis9Top">Datum Zeugnis 9</label>
+          <input id="DatumZeugnis9Top" type="text" value="${state.examDatum9 || ''}" placeholder="z. B. 10.07.2025" />
+        </div>
+      ` : ''}
 
-        ${state.others.includes('ag') ? `
-          <div class="field">
-            <label for="agNameTop">Name der AG</label>
-            <input id="agNameTop" type="text" value="${state.agName}" placeholder="z. B. Theater-AG" />
-          </div>
-        ` : ''}
+      ${showExamFields ? `
+        <div class="field">
+          <label for="examDeutschTop">BBR-Note Deutsch</label>
+          <input id="examDeutschTop" type="text" value="${state.examDeutsch}" placeholder="z. B. 3" />
+        </div>
+        <div class="field">
+          <label for="examMatheTop">BBR-Note Mathematik</label>
+          <input id="examMatheTop" type="text" value="${state.examMathe}" placeholder="z. B. 4" />
+        </div>
+      ` : ''}
 
-        ${state.others.includes('schulersatzmassnahme') ? `
-          <div class="field">
-            <label for="schulersatzmassnahmeNameTop">Name der Schulersatzmaßnahme</label>
-            <input id="schulersatzmassnahmeNameTop" type="text" value="${state.schulersatzmassnahmeName}" placeholder="z. B. Praxisprojekt ..." />
-          </div>
-        ` : ''}
+      ${showAuffangFields ? `
+        <div class="field">
+          <label for="auffangFachTop">Prüfungsfach</label>
+          <input id="auffangFachTop" type="text" value="${state.auffangFach}" placeholder="z. B. Englisch" />
+        </div>
+        <div class="field">
+          <label for="auffangNoteTop">Prüfungsnote</label>
+          <input id="auffangNoteTop" type="text" value="${state.auffangNote}" placeholder="z. B. 4" />
+        </div>
+      ` : ''}
 
-        ${state.others.includes('ob') ? `
-          <div class="field">
-            <label for="obFaecherTop">Fach / Fächer bei o. B.</label>
-            <input id="obFaecherTop" type="text" value="${state.obFaecher}" placeholder="z. B. Mathematik oder Mathematik, Deutsch oder alle Fächer" />
-          </div>
-        ` : ''}
+      ${state.others.includes('ag') ? `
+        <div class="field">
+          <label for="agNameTop">Name der AG</label>
+          <input id="agNameTop" type="text" value="${state.agName}" placeholder="z. B. Theater-AG" />
+        </div>
+      ` : ''}
 
-        ${state.others.includes('klassensprecher') ? `
-          <div class="field">
-            <label for="klassensprecherGeschlechtTop">Rolle</label>
-            <select id="klassensprecherGeschlechtTop">
-              <option value="m" ${state.klassensprecherGeschlecht === 'm' ? 'selected' : ''}>Klassensprecher</option>
-              <option value="w" ${state.klassensprecherGeschlecht === 'w' ? 'selected' : ''}>Klassensprecherin</option>
-            </select>
-          </div>
-        ` : ''}
+      ${state.others.includes('schulersatzmassnahme') ? `
+        <div class="field">
+          <label for="schulersatzmassnahmeNameTop">Name der Schulersatzmaßnahme</label>
+          <input id="schulersatzmassnahmeNameTop" type="text" value="${state.schulersatzmassnahmeName}" placeholder="z. B. Praxisprojekt ..." />
+        </div>
+      ` : ''}
 
-        ${state.others.includes('betriebspraktikum') ? `
-          <div class="field">
-            <label for="betriebspraktikumErfolgTop">Betriebspraktikum</label>
-            <select id="betriebspraktikumErfolgTop">
-              <option value="" ${state.betriebspraktikumErfolg === '' ? 'selected' : ''}>nur teilgenommen</option>
-              <option value="erfolgreich" ${state.betriebspraktikumErfolg === 'erfolgreich' ? 'selected' : ''}>erfolgreich</option>
-            </select>
-          </div>
-        ` : ''}
-        ${state.others.includes('girlsday') ? `
-  <div class="field">
-    <label for="girlsBoysDayTextTop">Girls-/Boys-Day</label>
-    <select id="girlsBoysDayTextTop">
-      <option value="Girls Day" ${state.girlsBoysDayText === 'Girls Day' ? 'selected' : ''}>Girls Day</option>
-      <option value="Boys Day" ${state.girlsBoysDayText === 'Boys Day' ? 'selected' : ''}>Boys Day</option>
-    </select>
-  </div>
-` : ''}
-      </div>
-    `;
+      ${state.others.includes('ob') ? `
+        <div class="field">
+          <label for="obFaecherTop">Fach / Fächer bei o. B.</label>
+          <input id="obFaecherTop" type="text" value="${state.obFaecher}" placeholder="z. B. Mathematik oder Mathematik, Deutsch oder alle Fächer" />
+        </div>
+      ` : ''}
 
-    wrap.innerHTML = html;
+      ${state.others.includes('klassensprecher') ? `
+        <div class="field">
+          <label for="klassensprecherGeschlechtTop">Rolle</label>
+          <select id="klassensprecherGeschlechtTop">
+            <option value="m" ${state.klassensprecherGeschlecht === 'm' ? 'selected' : ''}>Klassensprecher</option>
+            <option value="w" ${state.klassensprecherGeschlecht === 'w' ? 'selected' : ''}>Klassensprecherin</option>
+          </select>
+        </div>
+      ` : ''}
 
-    document.getElementById('examDeutschTop')?.addEventListener('input', e => {
-      state.examDeutsch = e.target.value;
-      buildOutput();
-    });
+      ${state.others.includes('betriebspraktikum') ? `
+        <div class="field">
+          <label for="betriebspraktikumErfolgTop">Betriebspraktikum</label>
+          <select id="betriebspraktikumErfolgTop">
+            <option value="" ${state.betriebspraktikumErfolg === '' ? 'selected' : ''}>nur teilgenommen</option>
+            <option value="erfolgreich" ${state.betriebspraktikumErfolg === 'erfolgreich' ? 'selected' : ''}>erfolgreich</option>
+          </select>
+        </div>
+      ` : ''}
 
-    document.getElementById('examMatheTop')?.addEventListener('input', e => {
-      state.examMathe = e.target.value;
-      buildOutput();
-    });
+      ${state.others.includes('girlsday') ? `
+        <div class="field">
+          <label for="girlsBoysDayTextTop">Girls-/Boys-Day</label>
+          <select id="girlsBoysDayTextTop">
+            <option value="Girls Day" ${state.girlsBoysDayText === 'Girls Day' ? 'selected' : ''}>Girls Day</option>
+            <option value="Boys Day" ${state.girlsBoysDayText === 'Boys Day' ? 'selected' : ''}>Boys Day</option>
+          </select>
+        </div>
+      ` : ''}
+    </div>
+  `;
 
-    document.getElementById('agNameTop')?.addEventListener('input', e => {
-      state.agName = e.target.value;
-      buildOutput();
-    });
+  wrap.innerHTML = html;
 
-    document.getElementById('schulersatzmassnahmeNameTop')?.addEventListener('input', e => {
-      state.schulersatzmassnahmeName = e.target.value;
-      buildOutput();
-    });
+  document.getElementById('DatumZeugnis9Top')?.addEventListener('input', e => {
+    state.examDatum9 = e.target.value;
+    buildOutput();
+  });
 
-    document.getElementById('obFaecherTop')?.addEventListener('input', e => {
-      state.obFaecher = e.target.value;
-      buildOutput();
-    });
+  document.getElementById('examDeutschTop')?.addEventListener('input', e => {
+    state.examDeutsch = e.target.value;
+    buildOutput();
+  });
 
-    document.getElementById('klassensprecherGeschlechtTop')?.addEventListener('change', e => {
-      state.klassensprecherGeschlecht = e.target.value;
-      buildOutput();
-    });
+  document.getElementById('examMatheTop')?.addEventListener('input', e => {
+    state.examMathe = e.target.value;
+    buildOutput();
+  });
 
-    document.getElementById('betriebspraktikumErfolgTop')?.addEventListener('change', e => {
-      state.betriebspraktikumErfolg = e.target.value;
-      buildOutput();
-    });
-    document.getElementById('girlsBoysDayTextTop')?.addEventListener('change', e => {
-  state.girlsBoysDayText = e.target.value;
-  buildOutput();
-});
-  }
+  document.getElementById('auffangFachTop')?.addEventListener('input', e => {
+    state.auffangFach = e.target.value;
+    buildOutput();
+  });
+
+  document.getElementById('auffangNoteTop')?.addEventListener('input', e => {
+    state.auffangNote = e.target.value;
+    buildOutput();
+  });
+
+  document.getElementById('agNameTop')?.addEventListener('input', e => {
+    state.agName = e.target.value;
+    buildOutput();
+  });
+
+  document.getElementById('schulersatzmassnahmeNameTop')?.addEventListener('input', e => {
+    state.schulersatzmassnahmeName = e.target.value;
+    buildOutput();
+  });
+
+  document.getElementById('obFaecherTop')?.addEventListener('input', e => {
+    state.obFaecher = e.target.value;
+    buildOutput();
+  });
+
+  document.getElementById('klassensprecherGeschlechtTop')?.addEventListener('change', e => {
+    state.klassensprecherGeschlecht = e.target.value;
+    buildOutput();
+  });
+
+  document.getElementById('betriebspraktikumErfolgTop')?.addEventListener('change', e => {
+    state.betriebspraktikumErfolg = e.target.value;
+    buildOutput();
+  });
+
+  document.getElementById('girlsBoysDayTextTop')?.addEventListener('change', e => {
+    state.girlsBoysDayText = e.target.value;
+    buildOutput();
+  });
+}
 
   const steps = [
     {
@@ -917,9 +962,7 @@
       title: '2. Abschluss festlegen',
       text: 'Erreichten Abschluss auswählen.',
       render: () => {
-        if (state.yearLevel === '10') {
-    return `<div class="status-box">Für Klasse 10 ist der Abschlussreiter deaktiviert.</div>`;
-  }
+
         if (isCompletionMode()) {
           const options = getCompletionOptions();
           return `
@@ -1077,16 +1120,20 @@
           state.bbrAchieved = null;
         }
 
-       buildOutput();
+        buildOutput();
 
 if (stepKey === 'differentiation') {
-  if (bbrDecisionAllowed()) {
-    currentStepIndex = 1; // Abschluss
-  } else {
-    currentStepIndex = 2; // Sonstiges
+  const shouldGoToExam =
+    bbrDecisionAllowed() || isCompletionMode();
+
+  const nextStepId = shouldGoToExam ? 'exam' : 'others';
+  const nextIndex = steps.findIndex(step => step.id === nextStepId);
+
+  if (nextIndex !== -1) {
+    currentStepIndex = nextIndex;
+    renderAll();
+    return;
   }
-  renderAll();
-  return;
 }
 
 if (currentStepIndex < steps.length - 1) {
