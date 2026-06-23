@@ -836,14 +836,14 @@
       ${state.others.includes('schulersatzmassnahme') ? `
         <div class="field">
           <label for="schulersatzmassnahmeNameTop">Name der Schulersatzmaßnahme</label>
-          <input id="schulersatzmassnahmeNameTop" type="text" value="${state.schulersatzmassnahmeName}" placeholder="z. B. Praxisprojekt ..." />
+          <input id="schulersatzmassnahmeNameTop" type="text" value="${state.schulersatzmassnahmeName}" placeholder="z. B. Trio" />
         </div>
       ` : ''}
 
       ${state.others.includes('ob') ? `
         <div class="field">
           <label for="obFaecherTop">Fach / Fächer bei o. B.</label>
-          <input id="obFaecherTop" type="text" value="${state.obFaecher}" placeholder="z. B. Mathematik oder Mathematik, Deutsch oder alle Fächer" />
+          <input id="obFaecherTop" type="text" value="${state.obFaecher}" placeholder="z. B. alle Fächer" />
         </div>
       ` : ''}
 
