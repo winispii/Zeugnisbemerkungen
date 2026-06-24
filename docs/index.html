@@ -80,7 +80,7 @@
     }
 
     .app-shell {
-      width: min(1220px, calc(100% - 2rem));
+      width: min(1300px, calc(100% - 2rem));
       margin: 0 auto;
       padding: var(--space-6) 0 var(--space-10);
     }
@@ -90,7 +90,7 @@
       justify-content: space-between;
       gap: var(--space-4);
       align-items: center;
-      margin-bottom: var(--space-6);
+      margin-bottom: var(--space-3);
       padding: var(--space-4) var(--space-5);
       background: color-mix(in oklab, var(--color-surface) 88%, transparent);
       border: 1px solid rgba(127,127,127,.16);
@@ -130,6 +130,8 @@
       color: var(--color-text-muted);
       margin-top: var(--space-1);
       max-width: 65ch;
+      white-space: nowrap;
+
     }
 
     .layout {
@@ -272,7 +274,7 @@
 
     .field {
       display: grid;
-      gap: .45rem;
+      gap: .01rem;
     }
 
     .field label {
@@ -287,6 +289,20 @@
       border: 1px solid rgba(127,127,127,.18);
       background: var(--color-surface-2);
     }
+
+    .meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
 
     .summary-card {
       padding: var(--space-4);
@@ -325,14 +341,14 @@
 
     .checkbox-list {
       display: grid;
-      gap: .75rem;
+      gap: .4rem;
     }
 
     .checkbox-item {
       display: flex;
-      gap: .8rem;
+      gap: .4rem;
       align-items: flex-start;
-      padding: .9rem 1rem;
+      padding: .6rem 1rem;
       background: var(--color-surface-2);
       border: 1px solid rgba(127,127,127,.15);
       border-radius: var(--radius-md);
@@ -403,17 +419,28 @@
 
     <main class="layout">
       <section class="panel left-panel">
-        <div class="step-label">Fließschema</div>
-        <h2 class="step-title">Entscheidungsweg</h2>
+        <h2 class="step-title">Fließschema</h2>
         <div class="progress" id="progress"></div>
         <div id="step-container"></div>
       </section>
 
       <section class="panel right-panel">
-        <div class="step-label">Ausgabe</div>
         <h2 class="step-title">Bemerkung zusammenstellen</h2>
 
         <div class="meta-grid">
+          
+          <div class="field">
+            <label for="studentName">Name / Platzhalter</label>
+            <input id="studentName" type="text" value="@NAME" />
+          </div>
+          <div class="field">
+            <label for="ersie">Pronomen-Platzhalter</label>
+            <input id="ersie" type="text" value="@ERSIE" />
+          </div>
+          <div class="field">
+            <label for="dateValue">Zeugnisdatum</label>
+            <input id="dateValue" type="text" value="08.07.2026" />
+          </div>
           <div class="field">
             <label for="yearLevel">Jahrgang</label>
             <select id="yearLevel">
@@ -429,22 +456,6 @@
               <option value="1">1. Halbjahr</option>
               <option value="2" selected>2. Halbjahr</option>
             </select>
-          </div>
-          <div class="field">
-            <label for="studentName">Name / Platzhalter</label>
-            <input id="studentName" type="text" value="@NAME" />
-          </div>
-          <div class="field">
-            <label for="ersie">Pronomen-Platzhalter</label>
-            <input id="ersie" type="text" value="@ERSIE" />
-          </div>
-          <div class="field">
-            <label for="dateValue">Zeugnisdatum</label>
-            <input id="dateValue" type="text" value="08.07.2026" />
-          </div>
-          <div class="field">
-            <label for="customIntro">Freier Zusatz am Ende</label>
-            <input id="customIntro" type="text" placeholder="z. B. Teilnahme am Schüleraustausch" />
           </div>
         </div>
 
@@ -468,12 +479,11 @@
     </main>
   </div>
 
-  <script>
+<script>
   const state = {
     studentName: '@NAME',
     ersie: '@ERSIE',
     dateValue: '08.07.2026',
-    customIntro: '',
     yearLevel: '9',
     halfYear: '2',
     differentiation: null,
@@ -482,15 +492,16 @@
     others: ['epochal'],
     examDeutsch: '',
     examMathe: '',
-    examDatum9: '23.07.2025',
+    examDatum9: '',
     auffangFach: '',
     auffangNote: '',
+    zumpFach: '',
     agName: '',
     schulersatzmassnahmeName: '',
     obFaecher: '',
     klassensprecherGeschlecht: 'm',
     betriebspraktikumErfolg: 'erfolgreich',
-    girlsBoysDayText: 'Girls-Day'
+    girlsBoysDayText: 'Girls Day'
   };
 
   const differentiationOptions = {
@@ -508,7 +519,7 @@
           summary: 'Kein Abschluss erreicht',
           text: '@ERSIE hat die allgemeine Schulpflicht erfüllt.'
         },
-        boa: {
+        /*boa: {
           label: 'BOA erreicht',
           summary: 'BOA erreicht',
           text: '@ERSIE hat den berufsorientierten Abschluss erworben.'
@@ -517,7 +528,7 @@
           label: 'BBR gleichwertig erreicht',
           summary: 'BBR gleichwertig erreicht',
           text: '@ERSIE hat den der Berufsbildungsreife gleichwertigen Abschluss erworben.'
-        }
+        }*/
       };
     }
 
@@ -529,7 +540,7 @@
       },
       bbr9: {
         label: 'BBR in 9',
-        summary: 'Datum des Abschlusszeugnis 9 angeben',
+        summary: 'Datum des Abschlusszeugnisses 9 angeben',
         text: '@NAME hat mit dem Zeugnis der Jahrgangsstufe 9 vom @DATUMZEUGNIS9 und den auf dem Beiblatt „Schul Z 211 Bei“ vermerkten Leistungen in den vergleichenden Arbeiten die Berufsbildungsreife erworben.'
       },
       bbr10: {
@@ -540,21 +551,24 @@
       auffang: {
         label: 'BBR 10 mit Auffangregelung',
         summary: 'Prüfungsfach + Note mit Note 4 oder besser eintragen',
-        text: 'Für den Abschluss galten die Bedingungen gemäß §44 Absatz 5 Sek I-VO; in der gemeinsamen Prüfung der Jahrgangsstufe 10 wurde im Fach @Auffangfach die Note @AuffangNote erzielt.'
+        text: 'Für den Abschluss galten die Bedingungen gemäß § 44 Absatz 5 Sek I-VO; in der gemeinsamen Prüfung der Jahrgangsstufe 10 wurde im Fach @Auffangfach die Note @AuffangNote erzielt.'
       },
     };
   }
 
   const otherOptions = [
     { key: 'epochal', label: 'Epochal', summary: 'Kunst und Musik bzw. ITG und WAT', text: 'Die Fächer Bildende Kunst und Musik wurden epochal unterrichtet.' },
-    { key: 'daz', label: 'DaZ', summary: 'DaZ belegt', text: '@ERSIE hat an ergänzenden Fördermaßnahmen zur Verbesserung der deutschen Sprachkenntnisse teilgenommen.' },
-    { key: 'klassensprecher', label: 'Klassensprecher', summary: 'Geschlecht wählen', text: '@NAME war @KLASSENSPRECHERROLLE.' },
-    { key: 'ob', label: 'o. B.', summary: 'Fächer eintragen', text: '' },
-    { key: 'betriebspraktikum', label: 'Betriebspraktikum', summary: 'Erfolgreich?', text: '@NAME hat @BETRIEBSPRAKTIKUMSTATUS am 3-wöchigen Betriebspraktikum teilgenommen.' },
-    { key: 'praxislernen', label: 'Praxisklasse', summary: 'Praxisklasse besucht + Zertifikat', text: '' },
-    { key: 'ag', label: 'AG-Teilnahme', summary: 'Name der AG angeben', text: '@NAME hat mit gutem Erfolg an der Arbeitsgemeinschaft @AGNAME teilgenommen.' },
-    { key: 'girlsday', label: 'Girls/Boys Day', summary: 'Girls/Boys Day auswählen', text: '@NAME hat am Girls Day/Boys Day teilgenommen.' },
+    { key: 'daz', label: 'DaZ', summary: '', text: '@ERSIE hat an ergänzenden Fördermaßnahmen zur Verbesserung der deutschen Sprachkenntnisse teilgenommen.' },
     { key: 'zulassung10h1', label: 'Freiw. Teilnahme MSA', summary: 'Freiw. Teilnahme MSA empfohlen', text: '@NAME erfüllt die Leistungsvoraussetzungen für die Zulassung zur gemeinsamen Prüfung zum Erwerb der erweiterten Berufsbildungsreife und zum mittleren Schulabschluss. Die Teilnahme wird empfohlen.' },
+    { key: 'betriebspraktikum', label: 'Betriebspraktikum', summary: 'Erfolgreich?', text: '@NAME hat @BETRIEBSPRAKTIKUMSTATUS am 3-wöchigen Betriebspraktikum teilgenommen.' },
+    { key: 'ob', label: 'o. B.', summary: 'Fächer eintragen', text: '' },
+    { key: 'praxislernen', label: 'Praxisklasse', summary: 'Praxisklasse besucht + Zertifikat', text: '' },
+    { key: 'zump', label: 'ZumP', summary: 'Fach angeben', text: '@NAME hat an einer zusätzlichen mündlichen Prüfung im Fach @ZUMPFACH teilgenommen.' },
+    { key: 'nachprüfung', label: 'Nachprüfung', summary: 'Fach angeben', text: buildNachprüfungText() },
+    { key: 'ag', label: 'AG-Teilnahme', summary: 'Name der AG angeben', text: '@NAME hat mit gutem Erfolg an der Arbeitsgemeinschaft @AGNAME teilgenommen.' },
+    { key: 'buddy', label: 'Buddy-Projekt', summary: '', text: '@NAME hat engagiert am "Buddy-Projekt" der Schule teilgenommen.' },
+    { key: 'girlsday', label: 'Girls/Boys Day', summary: 'Girls/Boys Day auswählen', text: '@NAME hat am Girls Day/Boys Day teilgenommen.' },
+    { key: 'klassensprecher', label: 'Klassensprecher', summary: 'Geschlecht wählen', text: '@NAME war @KLASSENSPRECHERROLLE.' },
     { key: 'schulersatzmassnahme', label: 'Schulersatzmaßnahme', summary: 'Maßnahme angeben', text: '@NAME besucht die Schulersatzmaßnahme @SCHULERSATZMASSNAHME. Eine Benotung durch die Schule kann daher nicht erfolgen.' }
   ];
 
@@ -597,6 +611,25 @@
     return `@NAME konnte in dem Fach ${raw} nicht beurteilt werden, da @ERSIE dem Unterricht entschuldigt fernbleiben musste.`;
   }
 
+  function buildNachprüfungText() {
+    const raw = (state.nachprüfungFach || '').trim();
+
+    if (!raw) {
+      return '@NAME ist berechtigt an einer Nachprüfung in Fach [hier benennen] teilzunehmen.';
+    }
+
+    const hasComma = raw.includes(',');
+    const hasUnd = /\bund\b/i.test(raw);
+    const hasSemicolon = raw.includes(';');
+    const isPlural = hasComma || hasUnd || hasSemicolon;
+
+    if (isPlural) {
+      return `@NAME ist berechtigt an einer Nachprüfung in den Fächern ${raw} teilzunehmen.`;
+    }
+
+    return `@NAME ist berechtigt an einer Nachprüfung im Fach ${raw} teilzunehmen.`;
+  }
+
   function replaceTokens(text) {
     return normalizeWhitespace(
       text
@@ -608,6 +641,8 @@
         .replaceAll('@DATUMZEUGNIS9', state.examDatum9 || '…')
         .replaceAll('@Auffangfach', state.auffangFach || '…')
         .replaceAll('@AuffangNote', state.auffangNote || '…')
+        .replaceAll('@ZUMPFACH', state.zumpFach || '…')
+        .replaceAll('@NACHPRUEFUNGFACH', state.nachprüfungFach || '…')
         .replaceAll('@AGNAME', state.agName || '...')
         .replaceAll('@SCHULERSATZMASSNAHME', state.schulersatzmassnahmeName || '...')
         .replaceAll('@KLASSENSPRECHERROLLE', getKlassensprecherText())
@@ -646,26 +681,30 @@
   }
 
   function getVisibleOtherOptions() {
-  return otherOptions
-    .filter(option => {
-      if (option.key === 'girlsday') return state.yearLevel === '7' || state.yearLevel === '8';
-      if (option.key === 'praxislernen') return state.yearLevel === '9' || state.yearLevel === '10';
-      if (option.key === 'betriebspraktikum') return state.yearLevel === '9' || state.yearLevel === '10';
-      if (option.key === 'zulassung10h1') return state.yearLevel === '10' && state.halfYear === '1';
-      return true;
-    })
-    .map(option => {
-      if (option.key === 'epochal') {
-        return {
-          ...option,
-          summary: state.yearLevel === '7'
-            ? 'Kunst und Musik bzw. ITG und WAT'
-            : 'Kunst und Musik'
-        };
-      }
-      return option;
-    });
-}
+    return otherOptions
+      .filter(option => {
+        if (option.key === 'girlsday') return state.yearLevel === '7' || state.yearLevel === '8';
+        if (option.key === 'praxislernen') return state.yearLevel === '9' || state.yearLevel === '10';
+        if (option.key === 'betriebspraktikum') return state.yearLevel === '9' && state.halfYear === '1' || state.yearLevel === '10' && state.halfYear === '1';
+        if (option.key === 'zulassung10h1') return state.yearLevel === '10' && state.halfYear === '1';
+        if (option.key === 'zump') return state.yearLevel === '10' && state.halfYear === '2';
+        if (option.key === 'nachprüfung') return state.yearLevel === '10' && state.halfYear === '2';
+        if (option.key === 'buddy') return state.yearLevel === '9' && state.halfYear === '2';
+        if (option.key === 'Klassensprecher') return state.halfYear === '2';
+        return true;
+      })
+      .map(option => {
+        if (option.key === 'epochal') {
+          return {
+            ...option,
+            summary: state.yearLevel === '7'
+              ? 'Kunst und Musik bzw. ITG und WAT'
+              : 'Kunst und Musik'
+          };
+        }
+        return option;
+      });
+  }
 
   function getDifferentiationIntroText() {
     if (state.yearLevel === '7' && state.halfYear === '1') {
@@ -773,6 +812,10 @@
       return buildObText();
     }
 
+    if (option.key === 'nachprüfung') {
+      return buildNachprüfungText();
+    }
+
     if (option.key === 'betriebspraktikum') {
       const status = getBetriebspraktikumText();
       if (!status) {
@@ -780,162 +823,189 @@
       }
       return '@NAME hat erfolgreich am 3-wöchigen Betriebspraktikum teilgenommen.';
     }
+
     if (option.key === 'girlsday') {
-  return `@NAME hat am ${state.girlsBoysDayText || 'Girls Day'} teilgenommen.`;
-}
+      return `@NAME hat am ${state.girlsBoysDayText || 'Girls Day'} teilgenommen.`;
+    }
 
     return option.text;
   }
 
   function renderDynamicFields() {
-  const wrap = document.getElementById('dynamic-fields-wrap');
-  if (!wrap) return;
+    const wrap = document.getElementById('dynamic-fields-wrap');
+    if (!wrap) return;
 
-  const showDatumZeugnis9Field = isCompletionMode() && state.abschluss === 'bbr9';
-  const showExamFields = isCompletionMode() && state.abschluss === 'bbr10';
-  const showAuffangFields = isCompletionMode() && state.abschluss === 'auffang';
+    const showDatumZeugnis9Field = isCompletionMode() && state.abschluss === 'bbr9';
+    const showExamFields =
+      (isCompletionMode() && state.abschluss === 'bbr10') ||
+      (bbrDecisionAllowed() && state.bbrAchieved === 'yes');
+    const showAuffangFields = isCompletionMode() && state.abschluss === 'auffang';
 
-  const html = `
-    <div class="helper-grid">
-      ${showDatumZeugnis9Field ? `
-        <div class="field">
-          <label for="DatumZeugnis9Top">Datum Zeugnis 9</label>
-          <input id="DatumZeugnis9Top" type="text" value="${state.examDatum9 || ''}" placeholder="z. B. 10.07.2025" />
-        </div>
-      ` : ''}
+    const html = `
+      <div class="helper-grid">
+        ${showDatumZeugnis9Field ? `
+          <div class="field">
+            <label for="DatumZeugnis9Top">Datum Zeugnis 9</label>
+            <input id="DatumZeugnis9Top" type="text" value="${state.examDatum9 || ''}" placeholder="z. B. 10.07.2025" />
+          </div>
+        ` : ''}
 
-      ${showExamFields ? `
-        <div class="field">
-          <label for="examDeutschTop">BBR-Note Deutsch</label>
-          <input id="examDeutschTop" type="text" value="${state.examDeutsch}" placeholder="z. B. 3" />
-        </div>
-        <div class="field">
-          <label for="examMatheTop">BBR-Note Mathematik</label>
-          <input id="examMatheTop" type="text" value="${state.examMathe}" placeholder="z. B. 4" />
-        </div>
-      ` : ''}
+        ${showExamFields ? `
+          <div class="field">
+            <label for="examDeutschTop">BBR-Note Deutsch</label>
+            <input id="examDeutschTop" type="text" value="${state.examDeutsch}" placeholder="z. B. 3" />
+          </div>
+          <div class="field">
+            <label for="examMatheTop">BBR-Note Mathematik</label>
+            <input id="examMatheTop" type="text" value="${state.examMathe}" placeholder="z. B. 4" />
+          </div>
+        ` : ''}
 
-      ${showAuffangFields ? `
-        <div class="field">
-          <label for="auffangFachTop">Prüfungsfach</label>
-          <input id="auffangFachTop" type="text" value="${state.auffangFach}" placeholder="z. B. Englisch" />
-        </div>
-        <div class="field">
-          <label for="auffangNoteTop">Prüfungsnote</label>
-          <input id="auffangNoteTop" type="text" value="${state.auffangNote}" placeholder="z. B. 4" />
-        </div>
-      ` : ''}
+        ${showAuffangFields ? `
+          <div class="field">
+            <label for="auffangFachTop">Prüfungsfach</label>
+            <input id="auffangFachTop" type="text" value="${state.auffangFach}" placeholder="z. B. Englisch" />
+          </div>
+          <div class="field">
+            <label for="auffangNoteTop">Prüfungsnote</label>
+            <input id="auffangNoteTop" type="text" value="${state.auffangNote}" placeholder="z. B. 4" />
+          </div>
+        ` : ''}
 
-      ${state.others.includes('ag') ? `
-        <div class="field">
-          <label for="agNameTop">Name der AG</label>
-          <input id="agNameTop" type="text" value="${state.agName}" placeholder="z. B. Theater-AG" />
-        </div>
-      ` : ''}
+        ${state.others.includes('zump') ? `
+          <div class="field">
+            <label for="zumpFachTop">ZumP-Fach</label>
+            <input id="zumpFachTop" type="text" value="${state.zumpFach}" placeholder="z. B. Deutsch" />
+          </div>
+        ` : ''}
 
-      ${state.others.includes('schulersatzmassnahme') ? `
-        <div class="field">
-          <label for="schulersatzmassnahmeNameTop">Name der Schulersatzmaßnahme</label>
-          <input id="schulersatzmassnahmeNameTop" type="text" value="${state.schulersatzmassnahmeName}" placeholder="z. B. Trio" />
-        </div>
-      ` : ''}
+        ${state.others.includes('nachprüfung') ? `
+          <div class="field">
+            <label for="nachprüfungFachTop">Nachprüfungsfach</label>
+            <input id="nachprüfungFachTop" type="text" value="${state.nachprüfungFach}" placeholder="z. B. Deutsch" />
+          </div>
+        ` : ''}
 
-      ${state.others.includes('ob') ? `
-        <div class="field">
-          <label for="obFaecherTop">Fach / Fächer bei o. B.</label>
-          <input id="obFaecherTop" type="text" value="${state.obFaecher}" placeholder="z. B. alle Fächer" />
-        </div>
-      ` : ''}
+        ${state.others.includes('ag') ? `
+          <div class="field">
+            <label for="agNameTop">Name der AG</label>
+            <input id="agNameTop" type="text" value="${state.agName}" placeholder="z. B. Theater-AG" />
+          </div>
+        ` : ''}
 
-      ${state.others.includes('klassensprecher') ? `
-        <div class="field">
-          <label for="klassensprecherGeschlechtTop">Rolle</label>
-          <select id="klassensprecherGeschlechtTop">
-            <option value="m" ${state.klassensprecherGeschlecht === 'm' ? 'selected' : ''}>Klassensprecher</option>
-            <option value="w" ${state.klassensprecherGeschlecht === 'w' ? 'selected' : ''}>Klassensprecherin</option>
-          </select>
-        </div>
-      ` : ''}
+        ${state.others.includes('schulersatzmassnahme') ? `
+          <div class="field">
+            <label for="schulersatzmassnahmeNameTop">Name der Schulersatzmaßnahme</label>
+            <input id="schulersatzmassnahmeNameTop" type="text" value="${state.schulersatzmassnahmeName}" placeholder="z. B. Trio" />
+          </div>
+        ` : ''}
 
-      ${state.others.includes('betriebspraktikum') ? `
-        <div class="field">
-          <label for="betriebspraktikumErfolgTop">Betriebspraktikum</label>
-          <select id="betriebspraktikumErfolgTop">
-            <option value="" ${state.betriebspraktikumErfolg === '' ? 'selected' : ''}>nur teilgenommen</option>
-            <option value="erfolgreich" ${state.betriebspraktikumErfolg === 'erfolgreich' ? 'selected' : ''}>erfolgreich</option>
-          </select>
-        </div>
-      ` : ''}
+        ${state.others.includes('ob') ? `
+          <div class="field">
+            <label for="obFaecherTop">Fach / Fächer bei o. B.</label>
+            <input id="obFaecherTop" type="text" value="${state.obFaecher}" placeholder="z. B. alle Fächer" />
+          </div>
+        ` : ''}
 
-      ${state.others.includes('girlsday') ? `
-        <div class="field">
-          <label for="girlsBoysDayTextTop">Girls-/Boys-Day</label>
-          <select id="girlsBoysDayTextTop">
-            <option value="Girls Day" ${state.girlsBoysDayText === 'Girls Day' ? 'selected' : ''}>Girls Day</option>
-            <option value="Boys Day" ${state.girlsBoysDayText === 'Boys Day' ? 'selected' : ''}>Boys Day</option>
-          </select>
-        </div>
-      ` : ''}
-    </div>
-  `;
+        ${state.others.includes('klassensprecher') ? `
+          <div class="field">
+            <label for="klassensprecherGeschlechtTop">Rolle</label>
+            <select id="klassensprecherGeschlechtTop">
+              <option value="m" ${state.klassensprecherGeschlecht === 'm' ? 'selected' : ''}>Klassensprecher</option>
+              <option value="w" ${state.klassensprecherGeschlecht === 'w' ? 'selected' : ''}>Klassensprecherin</option>
+            </select>
+          </div>
+        ` : ''}
 
-  wrap.innerHTML = html;
+        ${state.others.includes('betriebspraktikum') ? `
+          <div class="field">
+            <label for="betriebspraktikumErfolgTop">Betriebspraktikum</label>
+            <select id="betriebspraktikumErfolgTop">
+              <option value="" ${state.betriebspraktikumErfolg === '' ? 'selected' : ''}>nur teilgenommen</option>
+              <option value="erfolgreich" ${state.betriebspraktikumErfolg === 'erfolgreich' ? 'selected' : ''}>erfolgreich</option>
+            </select>
+          </div>
+        ` : ''}
 
-  document.getElementById('DatumZeugnis9Top')?.addEventListener('input', e => {
-    state.examDatum9 = e.target.value;
-    buildOutput();
-  });
+        ${state.others.includes('girlsday') ? `
+          <div class="field">
+            <label for="girlsBoysDayTextTop">Girls-/Boys-Day</label>
+            <select id="girlsBoysDayTextTop">
+              <option value="Girls Day" ${state.girlsBoysDayText === 'Girls Day' ? 'selected' : ''}>Girls Day</option>
+              <option value="Boys Day" ${state.girlsBoysDayText === 'Boys Day' ? 'selected' : ''}>Boys Day</option>
+            </select>
+          </div>
+        ` : ''}
+      </div>
+    `;
 
-  document.getElementById('examDeutschTop')?.addEventListener('input', e => {
-    state.examDeutsch = e.target.value;
-    buildOutput();
-  });
+    wrap.innerHTML = html;
 
-  document.getElementById('examMatheTop')?.addEventListener('input', e => {
-    state.examMathe = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('DatumZeugnis9Top')?.addEventListener('input', e => {
+      state.examDatum9 = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('auffangFachTop')?.addEventListener('input', e => {
-    state.auffangFach = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('examDeutschTop')?.addEventListener('input', e => {
+      state.examDeutsch = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('auffangNoteTop')?.addEventListener('input', e => {
-    state.auffangNote = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('examMatheTop')?.addEventListener('input', e => {
+      state.examMathe = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('agNameTop')?.addEventListener('input', e => {
-    state.agName = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('auffangFachTop')?.addEventListener('input', e => {
+      state.auffangFach = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('schulersatzmassnahmeNameTop')?.addEventListener('input', e => {
-    state.schulersatzmassnahmeName = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('auffangNoteTop')?.addEventListener('input', e => {
+      state.auffangNote = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('obFaecherTop')?.addEventListener('input', e => {
-    state.obFaecher = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('zumpFachTop')?.addEventListener('input', e => {
+      state.zumpFach = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('klassensprecherGeschlechtTop')?.addEventListener('change', e => {
-    state.klassensprecherGeschlecht = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('nachprüfungFachTop')?.addEventListener('input', e => {
+      state.nachprüfungFach = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('betriebspraktikumErfolgTop')?.addEventListener('change', e => {
-    state.betriebspraktikumErfolg = e.target.value;
-    buildOutput();
-  });
+    document.getElementById('agNameTop')?.addEventListener('input', e => {
+      state.agName = e.target.value;
+      buildOutput();
+    });
 
-  document.getElementById('girlsBoysDayTextTop')?.addEventListener('change', e => {
-    state.girlsBoysDayText = e.target.value;
-    buildOutput();
-  });
-}
+    document.getElementById('schulersatzmassnahmeNameTop')?.addEventListener('input', e => {
+      state.schulersatzmassnahmeName = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('obFaecherTop')?.addEventListener('input', e => {
+      state.obFaecher = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('klassensprecherGeschlechtTop')?.addEventListener('change', e => {
+      state.klassensprecherGeschlecht = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('betriebspraktikumErfolgTop')?.addEventListener('change', e => {
+      state.betriebspraktikumErfolg = e.target.value;
+      buildOutput();
+    });
+
+    document.getElementById('girlsBoysDayTextTop')?.addEventListener('change', e => {
+      state.girlsBoysDayText = e.target.value;
+      buildOutput();
+    });
+  }
 
   const steps = [
     {
@@ -962,7 +1032,6 @@
       title: '2. Abschluss festlegen',
       text: 'Erreichten Abschluss auswählen. EBBR, MSA und ÜGO erscheinen nicht als Bemerkung.',
       render: () => {
-
         if (isCompletionMode()) {
           const options = getCompletionOptions();
           return `
@@ -997,7 +1066,7 @@
       id: 'others',
       label: 'Sonstiges',
       title: '3. Sonstige Bemerkungen',
-      text: 'Hier steht alles aus dem Abschnitt Sonstiges zur Mehrfachauswahl bereit.',
+      text: 'Mehrfachauswahl möglich.',
       render: () => `
         <div class="checkbox-list">
           ${getVisibleOtherOptions().map(option => `
@@ -1019,7 +1088,7 @@
   const outputEl = document.getElementById('output');
 
   function buildBbrText() {
-    return `${state.studentName || '@NAME'} hat mit dem Zeugnis der Jahrgangsstufe 9 vom ${state.dateValue || '08.07.2026'} und den auf dem Beiblatt „Schul Z 211 Bei“ vermerkten Leistungen in den vergleichenden Arbeiten die Berufsbildungsreife erworben.`;
+    return `${state.studentName || '@NAME'} hat die Berufsbildungsreife erworben. Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 1 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note ${state.examDeutsch || '…'} und im Fach Mathematik die Note ${state.examMathe || '…'} erzielt.`;
   }
 
   function buildOutput() {
@@ -1047,12 +1116,10 @@
 
     const completionOptions = getCompletionOptions();
     if (isCompletionMode() && state.abschluss && completionOptions[state.abschluss]) {
-      thirdBlockParts.push(replaceTokens(completionOptions[state.abschluss].text));
+      const text = replaceTokens(completionOptions[state.abschluss].text);
+      if (text) thirdBlockParts.push(text);
     }
 
-    if (state.customIntro.trim()) {
-      secondBlockParts.push(state.customIntro.trim());
-    }
 
     const allBlocks = [
       firstBlockParts.join('\n'),
@@ -1122,24 +1189,22 @@
 
         buildOutput();
 
-if (stepKey === 'differentiation') {
-  const shouldGoToExam =
-    bbrDecisionAllowed() || isCompletionMode();
+        if (stepKey === 'differentiation') {
+          const shouldGoToExam = bbrDecisionAllowed() || isCompletionMode();
+          const nextStepId = shouldGoToExam ? 'exam' : 'others';
+          const nextIndex = steps.findIndex(step => step.id === nextStepId);
 
-  const nextStepId = shouldGoToExam ? 'exam' : 'others';
-  const nextIndex = steps.findIndex(step => step.id === nextStepId);
+          if (nextIndex !== -1) {
+            currentStepIndex = nextIndex;
+            renderAll();
+            return;
+          }
+        }
 
-  if (nextIndex !== -1) {
-    currentStepIndex = nextIndex;
-    renderAll();
-    return;
-  }
-}
-
-if (currentStepIndex < steps.length - 1) {
-  currentStepIndex += 1;
-  renderAll();
-}
+        if (currentStepIndex < steps.length - 1) {
+          currentStepIndex += 1;
+          renderAll();
+        }
       });
     });
 
@@ -1187,12 +1252,47 @@ if (currentStepIndex < steps.length - 1) {
 
     if (!bbrDecisionAllowed()) {
       state.bbrAchieved = null;
+      state.examDeutsch = '';
+      state.examMathe = '';
     }
 
     if (!isCompletionMode()) {
       state.abschluss = null;
-      state.examDeutsch = '';
-      state.examMathe = '';
+      state.examDatum9 = '';
+      state.auffangFach = '';
+      state.auffangNote = '';
+    }
+
+    if (!state.others.includes('zump')) {
+      state.zumpFach = '';
+    }
+
+    if (!state.others.includes('nachprüfung')) {
+      state.nachprüfungFach = '';
+    }
+
+    if (!state.others.includes('ag')) {
+      state.agName = '';
+    }
+
+    if (!state.others.includes('schulersatzmassnahme')) {
+      state.schulersatzmassnahmeName = '';
+    }
+
+    if (!state.others.includes('ob')) {
+      state.obFaecher = '';
+    }
+
+    if (!state.others.includes('klassensprecher')) {
+      state.klassensprecherGeschlecht = 'm';
+    }
+
+    if (!state.others.includes('betriebspraktikum')) {
+      state.betriebspraktikumErfolg = 'erfolgreich';
+    }
+
+    if (!state.others.includes('girlsday')) {
+      state.girlsBoysDayText = 'Girls Day';
     }
 
     state.others = state.others.filter(key =>
@@ -1215,6 +1315,9 @@ if (currentStepIndex < steps.length - 1) {
     state.abschluss = null;
     state.examDeutsch = '';
     state.examMathe = '';
+    state.examDatum9 = '';
+    state.auffangFach = '';
+    state.auffangNote = '';
     renderAll();
   });
 
@@ -1224,6 +1327,9 @@ if (currentStepIndex < steps.length - 1) {
     state.abschluss = null;
     state.examDeutsch = '';
     state.examMathe = '';
+    state.examDatum9 = '';
+    state.auffangFach = '';
+    state.auffangNote = '';
     renderAll();
   });
 
@@ -1242,10 +1348,6 @@ if (currentStepIndex < steps.length - 1) {
     buildOutput();
   });
 
-  document.getElementById('customIntro').addEventListener('input', e => {
-    state.customIntro = e.target.value;
-    buildOutput();
-  });
 
   document.getElementById('copyBtn').addEventListener('click', async () => {
     try {
@@ -1265,23 +1367,29 @@ if (currentStepIndex < steps.length - 1) {
     state.bbrAchieved = null;
     state.abschluss = null;
     state.others = ['epochal'];
-    state.customIntro = '';
+
     state.studentName = '@NAME';
     state.ersie = '@ERSIE';
     state.dateValue = '08.07.2026';
     state.examDeutsch = '';
     state.examMathe = '';
+    state.examDatum9 = '';
+    state.auffangFach = '';
+    state.auffangNote = '';
+    state.zumpFach = '';
+    state.nachprüfungFach = '';
     state.agName = '';
     state.schulersatzmassnahmeName = '';
     state.obFaecher = '';
-    state.klassensprecherGeschlecht = 'neutral';
+    state.klassensprecherGeschlecht = 'm';
     state.betriebspraktikumErfolg = 'erfolgreich';
-    state.girlsBoysDayText = '';
+    state.girlsBoysDayText = 'Girls Day';
 
     document.getElementById('studentName').value = '@NAME';
     document.getElementById('ersie').value = '@ERSIE';
     document.getElementById('dateValue').value = '08.07.2026';
-    document.getElementById('customIntro').value = '';
+
+   
 
     currentStepIndex = 0;
     renderAll();
