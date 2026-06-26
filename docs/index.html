@@ -837,8 +837,7 @@
 
     const showDatumZeugnis9Field = isCompletionMode() && state.abschluss === 'bbr9';
     const showExamFields =
-      (isCompletionMode() && state.abschluss === 'bbr10') ||
-      (bbrDecisionAllowed() && state.bbrAchieved === 'yes');
+      (isCompletionMode() && state.abschluss === 'bbr10');
     const showAuffangFields = isCompletionMode() && state.abschluss === 'auffang';
 
     const html = `
@@ -1088,7 +1087,7 @@
   const outputEl = document.getElementById('output');
 
   function buildBbrText() {
-    return `${state.studentName || '@NAME'} hat die Berufsbildungsreife erworben. Für den Abschluss galten die Bedingungen gemäß § 32 Absatz 1 Sek I-VO; in den vergleichenden Arbeiten wurden im Fach Deutsch die Note ${state.examDeutsch || '…'} und im Fach Mathematik die Note ${state.examMathe || '…'} erzielt.`;
+    return `${state.studentName || '@NAME'} hat die Berufsbildungsreife erworben.`;
   }
 
   function buildOutput() {
